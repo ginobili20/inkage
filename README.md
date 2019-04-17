@@ -1,7 +1,8 @@
 #### 简介
 	
 inkage 是一款原生开源的 javascript 插件，用于生成省市区选择器，基本用法十分简单。<br>
-注意：test.js为最初测试版本 具体以inkage.js为准
+注意：test.js为最初测试版本 具体以inkage.js为准<br>
+[预览](https://ginobili20.github.io/inkage/)
 
 #### 使用方法
 
@@ -25,9 +26,6 @@ inkage 是一款原生开源的 javascript 插件，用于生成省市区选择�
         districtId: 'district'
     })
 ```
-     效果如下
-
-	[界面](https://ginobili20.github.io/inkage/)
 
 #### API
 目前只设计了一个api <br>
@@ -44,3 +42,46 @@ inkage 是一款原生开源的 javascript 插件，用于生成省市区选择�
 	
 		"广东省|广州市|越秀区"
 
+
+#### 补充
+#### 插件的编写
+一个可复用的插件需要满足以下条件：
+
+插件自身的作用域与用户当前的作用域相互独立，也就是插件内部的私有变量不能影响使用者的环境变量；<br>
+插件需具备默认设置参数；<br>
+插件除了具备已实现的基本功能外，需提供部分API，使用者可以通过该API修改插件功能的默认参数，从而实现用户自定义插件效果；<br>
+插件支持链式调用；<br>
+插件需提供监听入口，及针对指定元素进行监听，使得该元素与插件响应达到插件效果。<br>
+
+插件的几种写法：
+1.面向对象的方式 （这里使用的是这种方式）
+```
+//自定义类    
+function plugin(){}
+
+//提供默认参数
+plugin.prototype.str = "default param";
+
+//提供方法(如果不传参,则使用默认参数)
+plugin.prototype.firstFunc = function(str = this.str){
+    alert(str);
+}
+
+//创建"对象"
+var p = new plugin();
+//调用方法
+p.firstFunc("Hello ! I am firstFunc");//Hello ! I am firstFunc
+p.firstFunc();//default param
+```
+
+2.闭包
+```
+var plugin =(function(){
+    function _firstFunc(str){
+        alert(str);
+    };
+    return{
+        firstFunc: _firstFunc,
+    };
+})();
+```
