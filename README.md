@@ -1,8 +1,17 @@
+
 #### 简介
 	
 inkage 是一款原生开源的 javascript 插件，用于生成省市区选择器，基本用法十分简单。<br>
 注意：test.js为最初测试版本 具体以inkage.js为准<br>
 [预览](https://ginobili20.github.io/inkage/)
+
+
+#### 原理
+利用了select的onchange事件，省份的onchange事件，触发市的onchange事件，市的onchange事件确定区的选择范围，从而形成了三级联动，<br>
+自定义属性prov_index存放数组下标，获取相应的市数组，然后根据市数组以及city_index获取区数组
+```
+this.province.options[this.province.selectedIndex].getAttribute('prov_index')
+```
 
 #### 使用方法
 
